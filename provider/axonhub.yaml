@@ -1,0 +1,150 @@
+provider: axonhub
+label:
+  en_US: AxonHub
+  zh_Hans: AxonHub
+description:
+  en_US: AxonHub model provider for chat, embeddings, and rerank.
+  zh_Hans: 面向聊天、嵌入和重排的 AxonHub 模型供应商。
+icon_small:
+  en_US: icon.svg
+icon_large:
+  en_US: icon.svg
+background: "#111827"
+supported_model_types:
+  - llm
+  - text-embedding
+  - rerank
+configurate_methods:
+  - predefined-model
+  - customizable-model
+provider_credential_schema:
+  credential_form_schemas:
+    - variable: endpoint_url
+      label:
+        en_US: AxonHub Base URL
+        zh_Hans: AxonHub Base URL
+      type: text-input
+      required: true
+      placeholder:
+        en_US: http://localhost:8090/v1
+        zh_Hans: http://localhost:8090/v1
+    - variable: api_key
+      label:
+        en_US: AxonHub API Key
+        zh_Hans: AxonHub API Key
+      type: secret-input
+      required: true
+      placeholder:
+        en_US: Enter your AxonHub API key
+        zh_Hans: 输入 AxonHub API Key
+    - variable: auto_discovery
+      label:
+        en_US: Enable model auto discovery
+        zh_Hans: 启用模型自动发现
+      type: switch
+      required: false
+      default: "true"
+    - variable: enable_tracing
+      label:
+        en_US: Enable tracing headers
+        zh_Hans: 启用请求追踪 Header
+      type: switch
+      required: false
+      default: "true"
+    - variable: request_timeout
+      label:
+        en_US: Request timeout seconds
+        zh_Hans: 请求超时时间（秒）
+      type: text-input
+      required: false
+      default: "60"
+model_credential_schema:
+  model:
+    label:
+      en_US: Model name
+      zh_Hans: 模型名称
+    placeholder:
+      en_US: axonhub-model-name
+      zh_Hans: axonhub-model-name
+  credential_form_schemas:
+    - variable: endpoint_model_name
+      label:
+        en_US: AxonHub endpoint model name
+        zh_Hans: AxonHub 端点模型名称
+      type: text-input
+      required: false
+      placeholder:
+        en_US: Leave empty to use the Dify model name
+        zh_Hans: 留空则使用 Dify 模型名称
+    - variable: display_name
+      label:
+        en_US: Display name
+        zh_Hans: 展示名称
+      type: text-input
+      required: false
+    - variable: model_type
+      label:
+        en_US: Model type
+        zh_Hans: 模型类型
+      type: select
+      required: true
+      options:
+        - label:
+            en_US: LLM
+            zh_Hans: 大语言模型
+          value: llm
+        - label:
+            en_US: Text Embedding
+            zh_Hans: 文本嵌入
+          value: text-embedding
+        - label:
+            en_US: Rerank
+            zh_Hans: 重排
+          value: rerank
+    - variable: context_size
+      label:
+        en_US: Context size
+        zh_Hans: 上下文长度
+      type: text-input
+      required: false
+    - variable: max_tokens_to_sample
+      label:
+        en_US: Max output tokens
+        zh_Hans: 最大输出 Token
+      type: text-input
+      required: false
+    - variable: vision_support
+      label:
+        en_US: Vision support
+        zh_Hans: 支持视觉
+      type: switch
+      required: false
+      default: "false"
+    - variable: tool_call_support
+      label:
+        en_US: Tool call support
+        zh_Hans: 支持工具调用
+      type: switch
+      required: false
+      default: "false"
+    - variable: reasoning_support
+      label:
+        en_US: Reasoning support
+        zh_Hans: 支持推理
+      type: switch
+      required: false
+      default: "false"
+    - variable: structured_output_support
+      label:
+        en_US: Structured output support
+        zh_Hans: 支持结构化输出
+      type: switch
+      required: false
+      default: "false"
+extra:
+  python:
+    provider_source: provider/axonhub.py
+    model_sources:
+      - models/llm/llm.py
+      - models/text_embedding/text_embedding.py
+      - models/rerank/rerank.py
