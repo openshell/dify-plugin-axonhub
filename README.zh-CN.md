@@ -4,13 +4,15 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Dify Plugin](https://img.shields.io/badge/Dify-Plugin-6C5CE7.svg)](https://dify.ai)
 
+**语言：** [中文](README.zh-CN.md) | [English](README.md)
+
 `dify-plugin-axonhub` 是一个面向 [Dify](https://dify.ai) 的 AxonHub 模型供应商插件。安装后，Dify 可以把 AxonHub 作为独立模型供应商使用，并通过 AxonHub 兼容接口调用大语言模型、文本嵌入模型和重排模型。
 
 相比只使用 Dify 的通用 OpenAI-compatible provider，本插件提供了更贴近 AxonHub 的配置体验、预定义模型列表、自定义模型兜底和请求追踪能力。
 
 ## 关于 AxonHub
 
-AxonHub 是本插件对接的上游模型网关项目，提供 OpenAI-compatible 的 chat 与 embedding API、Jina-compatible 的 rerank API、模型发现元数据以及请求追踪 Header。本插件的目标是把这些 AxonHub 能力以独立 provider 的方式带入 Dify。
+AxonHub 是本插件对接的上游模型网关项目，核心项目见 [AxonHub GitHub 仓库](https://github.com/looplj/axonhub)。它提供 OpenAI-compatible 的 chat 与 embedding API、Jina-compatible 的 rerank API、模型发现元数据以及请求追踪 Header。本插件的目标是把这些 AxonHub 能力以独立 provider 的方式带入 Dify。
 
 ## 功能亮点
 
@@ -79,11 +81,6 @@ python -m uv run pytest
 | `Request timeout seconds` | 否 | 请求 AxonHub API 的超时时间。 |
 
 如果某个 AxonHub 模型不在预定义模型列表中，可以在 Dify 中添加自定义模型，并将模型类型设置为 `llm`、`text-embedding` 或 `rerank`。当 Dify 展示名和实际 AxonHub 模型名不一致时，可以填写 `AxonHub endpoint model name`。
-
-## 语言
-
-- [中文](README.zh-CN.md)
-- [English](README.md)
 
 ## 文档
 
