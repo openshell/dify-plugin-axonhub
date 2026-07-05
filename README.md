@@ -8,6 +8,10 @@
 
 The plugin is designed for teams that want a first-class AxonHub provider experience instead of configuring AxonHub only through Dify's generic OpenAI-compatible provider.
 
+## About AxonHub
+
+AxonHub is the upstream model gateway project that exposes OpenAI-compatible chat and embedding APIs, a Jina-compatible rerank API, model discovery metadata, and tracing headers. This plugin focuses on bringing those AxonHub capabilities into Dify as a dedicated provider.
+
 ## Highlights
 
 - **Dedicated AxonHub provider** in Dify with provider-level credentials.
@@ -76,6 +80,11 @@ Configure these provider credentials in Dify:
 
 For models that are not included in the predefined YAML files, add a custom model in Dify and set the model type to `llm`, `text-embedding`, or `rerank`. Use `AxonHub endpoint model name` when the Dify display name should differ from the actual AxonHub model identifier.
 
+## Language
+
+- [English](README.md)
+- [中文](README.zh-CN.md)
+
 ## Documentation
 
 - [Installation guide](docs/installation.md)
@@ -84,7 +93,6 @@ For models that are not included in the predefined YAML files, add a custom mode
 - [Architecture overview](docs/architecture.md)
 - [Development guide](docs/development.md)
 - [Roadmap](ROADMAP.md)
-- [中文 README](README.zh-CN.md)
 
 ## Project layout
 
