@@ -6,19 +6,19 @@ This guide explains how to install the AxonHub model provider plugin in Dify.
 
 - A Dify workspace that supports third-party plugins.
 - An AxonHub endpoint and API key.
-- A plugin package file ending in `.difypkg`.
+- A packaged plugin file ending in `.difypkg`.
 
 ## Install from GitHub Release
 
-1. Open the GitHub Releases page for this repository.
+1. Open the repository's GitHub Releases page.
 2. Download the `.difypkg` asset for the target version.
 3. In Dify, open **Plugins** / **Plugin Management**.
 4. Upload the `.difypkg` file.
-5. After installation, open the AxonHub provider settings.
+5. Open the AxonHub provider settings.
 6. Configure AxonHub credentials.
-7. Click the model list / show models action in Dify and confirm predefined models are visible.
+7. Click Dify's model list / show models action and confirm predefined models are visible.
 
-Dify's GitHub installation flow expects a release asset. If the repository only contains source code and no GitHub Release with a `.difypkg` file, Dify may report that no release was found.
+Dify's GitHub installation flow expects a GitHub Release with a `.difypkg` asset. If the repository contains source code but no release asset, Dify may report that no release was found.
 
 ## Build from source
 
@@ -41,11 +41,13 @@ Package with the Dify plugin CLI:
 .tools/dify-plugin plugin package .
 ```
 
-Upload the generated `.difypkg` file to Dify.
+Upload the generated `.difypkg` file in Dify.
+
+If the Dify plugin CLI is not available locally, download the appropriate plugin daemon release from `langgenius/dify-plugin-daemon` and keep the binary outside git.
 
 ## Package verification
 
-Before uploading, verify the package includes these paths:
+Before uploading, verify the package contains these required paths:
 
 ```text
 _assets/icon.svg
@@ -68,6 +70,6 @@ For a manual upgrade:
 2. Upload it in Dify's plugin management page.
 3. Re-check provider credentials.
 4. Confirm predefined models still appear.
-5. Run a small chat or embedding request to verify runtime behavior.
+5. Run a small chat, embedding, or rerank request to verify runtime behavior.
 
 If a Dify workspace caches old plugin metadata, remove the old plugin version and install the new package again.

@@ -11,3 +11,6 @@ __pycache__/
 .tools/
 .git/
 .claude/
+CLAUDE.md
+TASKS.md
+*-glittery-cosmos.md

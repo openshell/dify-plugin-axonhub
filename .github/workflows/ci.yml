@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - phase-2-3-axonhub-integration
 
 jobs:
   test:

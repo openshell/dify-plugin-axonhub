@@ -13,7 +13,7 @@ Cause: Dify plugin daemon remaps icons from the package's `_assets/` directory. 
 Fix:
 
 1. Ensure `_assets/icon.svg` exists.
-2. Ensure `.difyignore` does not contain `_assets/`.
+2. Ensure `.difyignore` does not exclude `_assets/`.
 3. Rebuild the `.difypkg`.
 4. Upload the rebuilt package.
 
@@ -21,15 +21,15 @@ Root-level `icon.svg` or `provider/icon.svg` is not sufficient by itself. The pa
 
 ## Dify shows 0 models
 
-Cause: Dify's model list is loaded from predefined model YAML files included in the plugin package. Provider credential validation and AxonHub model discovery do not automatically populate the Dify model list.
+Cause: Dify's model list is loaded from predefined model YAML files included in the plugin package. Provider credential validation and AxonHub model discovery do not automatically populate Dify's model list.
 
 Fix:
 
 1. Ensure `provider/axonhub.yaml` contains a `models:` section.
-2. Ensure model YAML files exist under `models/llm/` and `models/text_embedding/`.
-3. Ensure `_position.yaml` files are included.
+2. Ensure model YAML files exist under `models/llm/`, `models/text_embedding/`, or `models/rerank/` as needed.
+3. Ensure each model directory includes `_position.yaml`.
 4. Rebuild and reinstall the plugin package.
-5. Run the provider schema test:
+5. Run the provider schema regression test:
 
    ```bash
    python -m uv run pytest tests/test_provider_schema.py
@@ -48,11 +48,11 @@ Fix:
 
 ## Provider credential validation fails
 
-Check:
+Check that:
 
 - AxonHub Base URL is reachable from the Dify runtime.
-- API key is valid.
-- Base URL points to AxonHub, not to Dify.
+- The API key is valid.
+- The Base URL points to AxonHub, not to Dify.
 - Network access from Dify to AxonHub is allowed.
 - AxonHub exposes OpenAI-compatible `/v1` endpoints.
 
@@ -84,5 +84,6 @@ When reporting issues, remove:
 - AxonHub API Key
 - Dify API Key
 - Authorization headers
+- `.env` contents
 - private endpoint URLs if needed
 - screenshots containing credentials

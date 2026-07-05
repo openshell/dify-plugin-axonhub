@@ -23,6 +23,8 @@ Run a focused provider schema regression test:
 python -m uv run pytest tests/test_provider_schema.py
 ```
 
+See [docs/development.md](docs/development.md) for additional local development and integration testing notes.
+
 ## Packaging locally
 
 Use the Dify plugin CLI:

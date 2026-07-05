@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Add model metadata mapping utilities.
 - Add predefined LLM and text embedding model YAML files.
 - Add provider schema regression test to ensure predefined models are loaded by Dify.
+- Add English and Chinese documentation, contribution guidelines, security policy, release checklist, issue templates, and CI.
 
 ### Fixed
 
