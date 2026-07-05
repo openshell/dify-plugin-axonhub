@@ -34,19 +34,19 @@ This file tracks the phased execution plan for building `dify-plugin-axonhub`. T
 
 **Deliverables:**
 
-- [ ] Base URL normalization
-- [ ] Auth header handling
-- [ ] `GET /v1/models?include=all` client
-- [ ] OpenAI-style error parsing
-- [ ] Model metadata mapper
-- [ ] Tracing header generation
-- [ ] Unit tests for client, mapper, and tracing
+- [x] Base URL normalization
+- [x] Auth header handling
+- [x] `GET /v1/models?include=all` client
+- [x] OpenAI-style error parsing
+- [x] Model metadata mapper
+- [x] Tracing header generation
+- [x] Unit tests for client, mapper, and tracing
 
 **Acceptance criteria:**
 
-- [ ] AxonHub model metadata can be fetched and mapped without calling Dify model classes.
-- [ ] Missing or partial AxonHub metadata degrades safely.
-- [ ] API keys are never logged or included in raised error messages.
+- [x] AxonHub model metadata can be fetched and mapped without calling Dify model classes.
+- [x] Missing or partial AxonHub metadata degrades safely.
+- [x] API keys are never logged or included in raised error messages.
 
 ## Phase 3: Dify model integrations
 
@@ -54,20 +54,20 @@ This file tracks the phased execution plan for building `dify-plugin-axonhub`. T
 
 **Deliverables:**
 
-- [ ] Provider credential validation
-- [ ] LLM implementation for `/v1/chat/completions`
-- [ ] Streaming LLM support
-- [ ] Tool/function calling compatibility where supported by Dify SDK
-- [ ] Text embedding implementation for `/v1/embeddings`
-- [ ] Rerank implementation for `/v1/rerank`
-- [ ] Manual model configuration fallback
-- [ ] Tracing headers injected into model calls when enabled
+- [x] Provider credential validation
+- [x] LLM implementation for `/v1/chat/completions`
+- [x] Streaming LLM support
+- [x] Tool/function calling compatibility where supported by Dify SDK
+- [x] Text embedding implementation for `/v1/embeddings`
+- [x] Rerank implementation for `/v1/rerank`
+- [x] Manual model configuration fallback
+- [x] Tracing headers injected into model calls when enabled
 
 **Acceptance criteria:**
 
-- [ ] AxonHub appears as an independent Dify provider.
-- [ ] Chat, embedding, and rerank calls can be executed with configured credentials.
-- [ ] Manual model configuration still works if model discovery is unavailable.
+- [x] AxonHub appears as an independent Dify provider.
+- [x] Chat, embedding, and rerank calls can be executed with configured credentials.
+- [x] Manual model configuration still works if model discovery is unavailable.
 
 ## Phase 4: Verification
 
@@ -110,6 +110,6 @@ This file tracks the phased execution plan for building `dify-plugin-axonhub`. T
 
 ## Current status
 
-- Current phase: Phase 1 complete; ready for Phase 2.
-- Next action: implement AxonHub core utilities: URL normalization, auth headers, `/v1/models?include=all`, error parsing, metadata mapping, and tracing tests.
-- Known blockers: real integration and packaging still require AxonHub/Dify credentials and the Dify plugin daemon binary.
+- Current phase: Phase 3 complete; ready for Phase 4 verification.
+- Next action: complete broader verification: request/response mapping tests, credential path tests, local smoke notes, plugin packaging/build check, and manual Dify smoke tests.
+- Known blockers: full Dify integration and packaging still require Dify API credentials and validation of the plugin daemon/runner configuration.
