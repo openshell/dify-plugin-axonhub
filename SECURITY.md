@@ -2,9 +2,9 @@
 
 ## Reporting a vulnerability
 
-Please do not report security vulnerabilities by opening a public GitHub issue if the report contains sensitive details.
+Please do not report security vulnerabilities in a public GitHub issue if the report contains sensitive details.
 
-For now, contact the project maintainer through the repository owner's preferred private channel. If no private channel is listed, open a minimal public issue that says you would like to report a security issue, without including secrets, exploit details, API keys, or private endpoint information.
+For now, contact the project maintainer through the repository owner's preferred private channel. If no private channel is listed, open a minimal public issue that says you would like to report a security issue, without including secrets, exploit details, API keys, private endpoint information, or reproduction steps that expose a live private system.
 
 ## Sensitive information
 

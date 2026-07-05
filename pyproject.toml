@@ -1,9 +1,29 @@
 [project]
 name = "dify-plugin-axonhub"
 version = "0.1.0"
-description = "Dify model provider plugin for AxonHub"
+description = "AxonHub model provider plugin for Dify"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
+license = "Apache-2.0"
+authors = [
+    { name = "OpenShell" },
+]
+keywords = [
+    "axonhub",
+    "dify",
+    "dify-plugin",
+    "llm",
+    "model-provider",
+    "rag",
+    "rerank",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "dify-plugin>=0.9.1,<1.0.0",
     "requests>=2.32.0",
@@ -14,6 +34,12 @@ dev = [
     "pytest>=8.0.0",
     "ruff>=0.8.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/openshell/dify-plugin-axonhub"
+Repository = "https://github.com/openshell/dify-plugin-axonhub"
+Issues = "https://github.com/openshell/dify-plugin-axonhub/issues"
+Changelog = "https://github.com/openshell/dify-plugin-axonhub/blob/main/CHANGELOG.md"
 
 [tool.ruff]
 line-length = 88

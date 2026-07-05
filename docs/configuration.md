@@ -25,7 +25,7 @@ http://localhost:8090/v1
 http://localhost:8090/v1/
 ```
 
-All are normalized to a single `/v1` API base internally. Deployment prefixes are preserved.
+All forms are normalized to a single `/v1` API base internally. Deployment prefixes are preserved.
 
 ## Predefined models
 
@@ -62,6 +62,8 @@ Custom model fields:
 | Tool call support | Mark the model as supporting tool/function calling where applicable. |
 | Reasoning support | Mark the model as a reasoning model where applicable. |
 | Structured output support | Mark the model as supporting structured output where applicable. |
+
+Prefer conservative capability settings. Do not enable vision, tool calling, reasoning, or structured output unless the target AxonHub model supports that capability.
 
 ## Tracing headers
 
