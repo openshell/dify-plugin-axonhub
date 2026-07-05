@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - phase-2-3-axonhub-integration
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run Ruff
+        run: uv run ruff check .
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Check Dify packaging invariants
+        run: |
+          test -f _assets/icon.svg
+          ! grep -Eq '^_assets/?$' .difyignore
+          grep -q '^models:' provider/axonhub.yaml
+          test -f models/llm/_position.yaml
+          test -f models/text_embedding/_position.yaml
+          test -f models/rerank/_position.yaml

@@ -1,0 +1,91 @@
+name: Bug report
+
+description: Report a problem installing or using the AxonHub Dify plugin.
+title: "[Bug]: "
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Do not paste API keys, Authorization headers, or `.env` contents.
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: For example, v0.1.0.
+      placeholder: v0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: dify-version
+    attributes:
+      label: Dify version or deployment type
+      description: Dify Cloud, self-hosted version, or commit if known.
+      placeholder: Dify Cloud / self-hosted x.y.z
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Installation method
+      options:
+        - GitHub Release .difypkg upload
+        - Built from source
+        - Dify GitHub install flow
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: model-type
+    attributes:
+      label: Model type
+      options:
+        - Provider setup
+        - LLM
+        - Text Embedding
+        - Rerank
+        - Packaging / installation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error message or logs
+      description: Remove API keys, Authorization headers, and private values before pasting.
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Install plugin ...
+        2. Configure provider ...
+        3. Click ...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed API keys, Authorization headers, and private secrets from this report.
+          required: true

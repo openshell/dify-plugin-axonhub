@@ -1,4 +1,3 @@
-_assets/
 .env
 .env.*
 !.env.example
@@ -11,3 +10,4 @@ __pycache__/
 *.difypkg
 .tools/
 .git/
+.claude/
