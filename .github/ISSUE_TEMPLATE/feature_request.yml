@@ -1,0 +1,60 @@
+name: Feature request
+
+description: Request a new feature or predefined AxonHub model.
+title: "[Feature]: "
+labels: ["enhancement"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. Do not include API keys or private credentials.
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: Request type
+      options:
+        - Add predefined LLM model
+        - Add predefined text embedding model
+        - Add predefined rerank model
+        - Improve Dify integration
+        - Improve documentation
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: model-name
+    attributes:
+      label: AxonHub model name
+      description: Required only for model requests.
+      placeholder: model-name
+    validations:
+      required: false
+
+  - type: textarea
+    id: capability
+    attributes:
+      label: Capabilities or expected behavior
+      description: Include context size, max output tokens, vision/tool/reasoning support, or links to docs when relevant.
+    validations:
+      required: false
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why is this useful?
+      description: Explain the use case this would unlock.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to test this in Dify.
+          required: false
+        - label: I am willing to open a pull request.
+          required: false
