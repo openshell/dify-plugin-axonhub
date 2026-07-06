@@ -12,5 +12,8 @@ def test_provider_schema_uses_customizable_models_only() -> None:
 
     assert provider.configurate_methods == [ConfigurateMethod.CUSTOMIZABLE_MODEL]
     assert provider.models == []
-    assert provider.position is None
+    assert provider.position is not None
+    assert provider.position.llm == []
+    assert provider.position.text_embedding == []
+    assert provider.position.rerank == []
     assert provider.model_credential_schema is not None
