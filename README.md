@@ -6,9 +6,12 @@
 
 **Language:** [English](README.md) | [中文](README.zh-CN.md)
 
+<img width="2362" height="1669" alt="动画" src="https://github.com/user-attachments/assets/e9717620-424e-4df9-8306-15d66de01ce8" />
+
 `dify-plugin-axonhub` connects [Dify](https://dify.ai) to AxonHub as a dedicated model provider. It lets Dify users configure AxonHub once and use chat LLMs, text embeddings, and rerank models through AxonHub-compatible APIs.
 
 The plugin is designed for teams that want a first-class AxonHub provider experience instead of configuring AxonHub only through Dify's generic OpenAI-compatible provider.
+
 
 ## About AxonHub
 
