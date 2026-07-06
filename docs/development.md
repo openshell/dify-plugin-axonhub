@@ -78,11 +78,11 @@ Recommended smoke checks before a release:
 
 1. Install the generated `.difypkg` in Dify.
 2. Configure AxonHub provider credentials.
-3. Confirm predefined LLM and embedding models appear.
+3. Add one custom LLM, embedding, and rerank model by entering AxonHub model names and confirm their schemas load.
 4. Run one non-streaming LLM request.
 5. Run one streaming LLM request when supported by the target model.
 6. Run one embedding request.
-7. Configure and run a rerank model request.
+7. Run one rerank model request.
 8. Enable tracing headers and verify AxonHub receives `AH-Trace-Id` and `AH-Thread-Id`.
 
 ## Implementation notes

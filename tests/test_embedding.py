@@ -4,6 +4,7 @@ import json
 from decimal import Decimal
 
 import requests
+from dify_plugin.entities.model import ModelPropertyKey, ModelType
 from dify_plugin.entities.model.text_embedding import EmbeddingUsage
 import models.text_embedding.text_embedding as embedding_module
 from models.text_embedding.text_embedding import AxonHubTextEmbeddingModel
@@ -28,6 +29,21 @@ class FakeRequests:
         if isinstance(self.response, Exception):
             raise self.response
         return self.response
+
+
+class FakeClient:
+    def list_models(self, include="all"):
+        assert include == "all"
+        return {
+            "data": [
+                {
+                    "id": "real-embed",
+                    "name": "Real Embed",
+                    "type": "embedding",
+                    "context_length": 8192,
+                }
+            ]
+        }
 
 
 def embedding_model() -> AxonHubTextEmbeddingModel:
@@ -125,7 +141,20 @@ def test_embedding_post_helper_uses_timeout() -> None:
     ]
 
 
-def test_embedding_maps_timeout(monkeypatch) -> None:
+def test_embedding_customizable_schema_is_loaded_from_axonhub(monkeypatch) -> None:
+    monkeypatch.setattr("axonhub.model_schema.build_client", lambda _credentials: FakeClient())
+
+    schema = embedding_model().get_customizable_model_schema(
+        "dify-embed",
+        {"endpoint_model_name": "real-embed"},
+    )
+
+    assert schema.model == "dify-embed"
+    assert schema.label.en_us == "Real Embed"
+    assert schema.model_type == ModelType.TEXT_EMBEDDING
+    assert schema.model_properties[ModelPropertyKey.CONTEXT_SIZE] == 8192
+    assert schema.model_properties[ModelPropertyKey.MAX_CHUNKS] == 1
+
     fake_requests = FakeRequests(requests.Timeout("boom"))
     monkeypatch.setattr(embedding_module.requests, "post", fake_requests.post)
 

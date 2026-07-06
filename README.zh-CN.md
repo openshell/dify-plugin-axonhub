@@ -8,7 +8,7 @@
 
 `dify-plugin-axonhub` 是一个面向 [Dify](https://dify.ai) 的 AxonHub 模型供应商插件。安装后，Dify 可以把 AxonHub 作为独立模型供应商使用，并通过 AxonHub 兼容接口调用大语言模型、文本嵌入模型和重排模型。
 
-相比只使用 Dify 的通用 OpenAI-compatible provider，本插件提供了更贴近 AxonHub 的配置体验、预定义模型列表、自定义模型兜底和请求追踪能力。
+相比只使用 Dify 的通用 OpenAI-compatible provider，本插件提供了更贴近 AxonHub 的配置体验、自定义模型元数据自动补全和请求追踪能力。
 
 ## 关于 AxonHub
 
@@ -17,11 +17,11 @@ AxonHub 是本插件对接的上游模型网关项目，核心项目见 [AxonHub
 ## 功能亮点
 
 - 在 Dify 中提供独立的 **AxonHub** 模型供应商。
+- 在 Dify 中输入自定义模型名后，通过 AxonHub `/v1/models` 自动补全单模型信息。
 - 通过 `/v1/chat/completions` 支持 Chat LLM。
 - 通过 `/v1/embeddings` 支持 Text Embedding，并使用 `encoding_format=float`。
 - 通过 `/v1/rerank` 支持 Rerank。
-- 内置预定义模型 YAML，安装后可在 Dify 中直接显示已知 AxonHub 模型。
-- 支持自定义模型，适用于新增模型、私有模型或租户专属模型。
+- 支持 `AxonHub endpoint model name`，适用于 Dify 展示名和 AxonHub 真实模型 ID 不一致的场景。
 - 支持可选追踪 Header：`AH-Trace-Id` 和 `AH-Thread-Id`。
 - 错误处理会避免在异常信息中暴露 API Key。
 
@@ -80,7 +80,9 @@ python -m uv run pytest
 | `Enable tracing headers` | 否 | 启用后请求会携带 `AH-Trace-Id` 和 `AH-Thread-Id`。 |
 | `Request timeout seconds` | 否 | 请求 AxonHub API 的超时时间。 |
 
-如果某个 AxonHub 模型不在预定义模型列表中，可以在 Dify 中添加自定义模型，并将模型类型设置为 `llm`、`text-embedding` 或 `rerank`。当 Dify 展示名和实际 AxonHub 模型名不一致时，可以填写 `AxonHub endpoint model name`。
+配置 provider 凭据后，请在 Dify 中添加自定义模型，并将模型类型设置为 `llm`、`text-embedding` 或 `rerank`。如果 Dify 模型名就是 AxonHub 真实模型 ID，直接填写该名称即可；插件会调用 AxonHub `/v1/models?include=all` 并根据发现元数据自动补全单个模型的 schema。如果希望 Dify 中使用友好名称或别名，请在 `AxonHub endpoint model name` 中填写真实 AxonHub 模型 ID。
+
+当前 Dify plugin SDK 没有提供“基于 provider 凭证动态列出完整模型列表”的标准入口。因此本插件不再内置维护者私有的预定义 YAML 模型；模型发现发生在用户输入自定义模型名之后。
 
 ## 文档
 
@@ -97,8 +99,8 @@ python -m uv run pytest
 manifest.yaml                 # Dify 插件元数据
 provider/axonhub.yaml          # Provider schema 和模型注册
 provider/axonhub.py            # Provider 凭据校验
-models/llm/                    # LLM 实现与预定义模型
-models/text_embedding/         # Embedding 实现与预定义模型
+models/llm/                    # LLM 实现
+models/text_embedding/         # Embedding 实现
 models/rerank/                 # Rerank 实现
 axonhub/                       # AxonHub client、模型映射、错误处理和 tracing
 docs/                          # 用户和贡献者文档

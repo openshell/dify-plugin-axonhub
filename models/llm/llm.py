@@ -2,6 +2,7 @@ from dify_plugin.entities.model import ModelType
 from dify_plugin.interfaces.model.openai_compatible import llm as oai_llm
 
 from axonhub.dify_compat import to_llm_credentials
+from axonhub.model_schema import get_customizable_model_schema_from_axonhub
 
 
 class AxonHubLargeLanguageModel(oai_llm.OAICompatLargeLanguageModel):
@@ -18,14 +19,19 @@ class AxonHubLargeLanguageModel(oai_llm.OAICompatLargeLanguageModel):
         stream: bool = True,
         user: str | None = None,
     ):
+        normalized_credentials = to_llm_credentials(
+            model,
+            credentials,
+            user=user,
+            include_tracing=True,
+        )
+        if tools:
+            normalized_credentials["function_calling_type"] = "tool_call"
+            normalized_credentials["stream_function_calling"] = "supported"
+
         return super()._invoke(
             model=model,
-            credentials=to_llm_credentials(
-                model,
-                credentials,
-                user=user,
-                include_tracing=True,
-            ),
+            credentials=normalized_credentials,
             prompt_messages=prompt_messages,
             model_parameters=model_parameters,
             tools=tools,
@@ -41,7 +47,8 @@ class AxonHubLargeLanguageModel(oai_llm.OAICompatLargeLanguageModel):
         )
 
     def get_customizable_model_schema(self, model: str, credentials: dict):
-        return super().get_customizable_model_schema(
+        return get_customizable_model_schema_from_axonhub(
             model,
-            to_llm_credentials(model, credentials),
+            credentials,
+            expected_model_type=ModelType.LLM,
         )

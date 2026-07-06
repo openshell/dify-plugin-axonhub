@@ -1,9 +1,0 @@
-model: Qwen3-Embedding-8B
-label:
-  en_US: Qwen3-Embedding-8B
-  zh_Hans: Qwen3-Embedding-8B
-model_type: text-embedding
-model_properties:
-  context_size: 8192
-  max_chunks: 32
-parameter_rules: []
