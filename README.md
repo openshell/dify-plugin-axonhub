@@ -3,7 +3,11 @@
 [![CI](https://github.com/openshell/dify-plugin-axonhub/actions/workflows/ci.yml/badge.svg)](https://github.com/openshell/dify-plugin-axonhub/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Dify Plugin](https://img.shields.io/badge/Dify-Plugin-6C5CE7.svg)](https://dify.ai)
+
+**Language:** [English](README.md) | [中文](README.zh-CN.md)
+
 <img width="2362" height="1669" alt="动画" src="https://github.com/user-attachments/assets/e9717620-424e-4df9-8306-15d66de01ce8" />
+
 `dify-plugin-axonhub` connects [Dify](https://dify.ai) to AxonHub as a dedicated model provider. It lets Dify users configure AxonHub once and use chat LLMs, text embeddings, and rerank models through AxonHub-compatible APIs.
 
 The plugin is designed for teams that want a first-class AxonHub provider experience instead of configuring AxonHub only through Dify's generic OpenAI-compatible provider.
@@ -11,7 +15,7 @@ The plugin is designed for teams that want a first-class AxonHub provider experi
 
 ## About AxonHub
 
-AxonHub is the upstream model gateway project that exposes OpenAI-compatible chat and embedding APIs, a Jina-compatible rerank API, model discovery metadata, and tracing headers. This plugin focuses on bringing those AxonHub capabilities into Dify as a dedicated provider.
+AxonHub is the upstream model gateway project for this plugin. See the [AxonHub GitHub repository](https://github.com/looplj/axonhub) for the core project. It exposes OpenAI-compatible chat and embedding APIs, a Jina-compatible rerank API, model discovery metadata, and tracing headers. This plugin focuses on bringing those AxonHub capabilities into Dify as a dedicated provider.
 
 ## Highlights
 
@@ -80,11 +84,6 @@ Configure these provider credentials in Dify:
 | `Request timeout seconds` | No | Timeout for AxonHub API requests. |
 
 For models that are not included in the predefined YAML files, add a custom model in Dify and set the model type to `llm`, `text-embedding`, or `rerank`. Use `AxonHub endpoint model name` when the Dify display name should differ from the actual AxonHub model identifier.
-
-## Language
-
-- [English](README.md)
-- [中文](README.zh-CN.md)
 
 ## Documentation
 
