@@ -21,19 +21,29 @@ Root-level `icon.svg` or `provider/icon.svg` is not sufficient by itself. The pa
 
 ## Dify shows 0 models
 
-Cause: Dify's model list is loaded from predefined model YAML files included in the plugin package. Provider credential validation and AxonHub model discovery do not automatically populate Dify's model list.
+This is expected for the provider-level model list. The current Dify plugin SDK does not expose a provider-credential-aware hook that lets a plugin dynamically list all AxonHub models in the provider UI.
 
 Fix:
 
-1. Ensure `provider/axonhub.yaml` contains a `models:` section.
-2. Ensure model YAML files exist under `models/llm/`, `models/text_embedding/`, or `models/rerank/` as needed.
-3. Ensure each model directory includes `_position.yaml`.
-4. Rebuild and reinstall the plugin package.
-5. Run the provider schema regression test:
+1. Configure AxonHub provider credentials.
+2. Add a custom model in Dify.
+3. Enter the AxonHub model ID as the model name, or enter a friendly Dify model name and set `AxonHub endpoint model name` to the real AxonHub model ID.
+4. The plugin calls `/v1/models?include=all` and fills the single custom model schema from AxonHub discovery metadata.
+5. Run the provider and schema regression tests:
 
    ```bash
-   python -m uv run pytest tests/test_provider_schema.py
+   uv run pytest tests/test_provider_schema.py tests/test_model_schema.py
    ```
+
+## Custom model schema does not load
+
+Check that:
+
+- AxonHub Base URL is reachable from the Dify runtime.
+- The API key is valid.
+- AxonHub exposes `/v1/models`.
+- The entered model name, or `AxonHub endpoint model name` when configured, exactly matches a model ID returned by AxonHub discovery.
+- The selected Dify model type matches the AxonHub model type (`llm`, `text-embedding`, or `rerank`).
 
 ## GitHub install reports no release found
 
@@ -67,9 +77,9 @@ http://localhost:8090/v1
 
 It normalizes the URL internally and avoids adding `/v1` twice.
 
-## Rerank model is not listed
+## Rerank model setup
 
-If no predefined rerank model appears, configure a custom model in Dify:
+Configure a custom model in Dify:
 
 - Model type: `rerank`
 - Model name: the AxonHub rerank model name

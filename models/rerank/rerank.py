@@ -24,6 +24,7 @@ from axonhub.dify_compat import (
     redacted_error_message,
 )
 from axonhub.errors import AxonHubAPIError, AxonHubConfigurationError
+from axonhub.model_schema import get_customizable_model_schema_from_axonhub
 from axonhub.tracing import build_tracing_headers
 
 
@@ -106,6 +107,13 @@ class AxonHubRerankModel(rerank_model.RerankModel):
             raise CredentialsValidateFailedError(
                 redacted_error_message(exc, credentials)
             ) from exc
+
+    def get_customizable_model_schema(self, model: str, credentials: dict):
+        return get_customizable_model_schema_from_axonhub(
+            model,
+            credentials,
+            expected_model_type=ModelType.RERANK,
+        )
 
     @property
     def _invoke_error_mapping(self):

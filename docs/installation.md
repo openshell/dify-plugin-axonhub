@@ -16,7 +16,7 @@ This guide explains how to install the AxonHub model provider plugin in Dify.
 4. Upload the `.difypkg` file.
 5. Open the AxonHub provider settings.
 6. Configure AxonHub credentials.
-7. Click Dify's model list / show models action and confirm predefined models are visible.
+7. Add a custom model in Dify and enter an AxonHub model name; the plugin fills its schema from AxonHub model discovery metadata.
 
 Dify's GitHub installation flow expects a GitHub Release with a `.difypkg` asset. If the repository contains source code but no release asset, Dify may report that no release was found.
 
@@ -25,14 +25,14 @@ Dify's GitHub installation flow expects a GitHub Release with a `.difypkg` asset
 Install dependencies:
 
 ```bash
-python -m uv sync
+uv sync
 ```
 
 Run local checks:
 
 ```bash
-python -m uv run ruff check .
-python -m uv run pytest
+uv run ruff check .
+uv run pytest
 ```
 
 Package with the Dify plugin CLI:
@@ -53,11 +53,9 @@ Before uploading, verify the package contains these required paths:
 _assets/icon.svg
 manifest.yaml
 provider/axonhub.yaml
-models/llm/_position.yaml
-models/llm/*.yaml
-models/text_embedding/_position.yaml
-models/text_embedding/*.yaml
-models/rerank/_position.yaml
+models/llm/llm.py
+models/text_embedding/text_embedding.py
+models/rerank/rerank.py
 ```
 
 The `_assets/icon.svg` file is required because Dify remaps plugin and provider icons from the `_assets` directory.
@@ -69,7 +67,7 @@ For a manual upgrade:
 1. Download or build the newer `.difypkg`.
 2. Upload it in Dify's plugin management page.
 3. Re-check provider credentials.
-4. Confirm predefined models still appear.
+4. Re-check custom model configuration; model schema is loaded from AxonHub discovery after the model name is entered.
 5. Run a small chat, embedding, or rerank request to verify runtime behavior.
 
 If a Dify workspace caches old plugin metadata, remove the old plugin version and install the new package again.

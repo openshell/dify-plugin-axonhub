@@ -27,43 +27,35 @@ http://localhost:8090/v1/
 
 All forms are normalized to a single `/v1` API base internally. Deployment prefixes are preserved.
 
-## Predefined models
+## Custom models and schema discovery
 
-The plugin package includes model YAML files under:
+This plugin uses Dify custom models as the primary model configuration path. Add a custom model in Dify and choose `llm`, `text-embedding`, or `rerank` as the model type.
+
+When Dify asks the plugin for that model schema, the plugin calls AxonHub:
 
 ```text
-models/llm/
-models/text_embedding/
-models/rerank/
+GET /v1/models?include=all
 ```
 
-Dify uses these files to populate the model list. Provider credential validation alone does not populate Dify's model list; the `models:` globs in `provider/axonhub.yaml` and the packaged YAML files are required.
-
-## Custom models
-
-Use custom models when:
-
-- AxonHub exposes a new model that is not in the predefined list.
-- You want a Dify display name that differs from the AxonHub endpoint model name.
-- You need to configure a private or tenant-specific AxonHub model.
-- You need rerank support but no predefined rerank model is listed.
+It then finds the requested model and fills the Dify model schema from AxonHub discovery metadata, including context size, max output tokens, supported capabilities, and pricing where available.
 
 Custom model fields:
 
 | Field | Description |
 | --- | --- |
-| Model name | The Dify model identifier. |
-| AxonHub endpoint model name | Optional actual AxonHub model name. Leave empty to use the Dify model name. |
-| Display name | Optional display label. |
+| Model name | The Dify model identifier. If `AxonHub endpoint model name` is empty, this is also the AxonHub model ID used for discovery and invocation. |
+| AxonHub endpoint model name | Optional actual AxonHub model ID. Use it when the Dify model name is a friendly alias. |
+| Display name | Optional display label override. |
 | Model type | `llm`, `text-embedding`, or `rerank`. |
-| Context size | Optional model context size. |
-| Max output tokens | Optional max output token limit for LLMs. |
-| Vision support | Mark the model as supporting vision where applicable. |
-| Tool call support | Mark the model as supporting tool/function calling where applicable. |
-| Reasoning support | Mark the model as a reasoning model where applicable. |
-| Structured output support | Mark the model as supporting structured output where applicable. |
 
-Prefer conservative capability settings. Do not enable vision, tool calling, reasoning, or structured output unless the target AxonHub model supports that capability.
+Example mappings:
+
+| Dify model name | AxonHub endpoint model name | Model sent to AxonHub |
+| --- | --- | --- |
+| `my-chat-model` | empty | `my-chat-model` |
+| `company-gpt` | `tenant-a/gpt-prod` | `tenant-a/gpt-prod` |
+
+The current Dify plugin SDK does not provide a provider-credential-aware hook for listing all models dynamically in the provider UI. Therefore this plugin does not ship maintainer-specific predefined YAML models. Model discovery happens after a user enters a custom model name.
 
 ## Tracing headers
 

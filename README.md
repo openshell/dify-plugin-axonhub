@@ -19,12 +19,11 @@ AxonHub is the upstream model gateway project for this plugin. See the [AxonHub 
 
 ## Highlights
 
-- **Dedicated AxonHub provider** in Dify with provider-level credentials.
+- **Custom model schema discovery**: enter an AxonHub model name in Dify and the plugin loads metadata from AxonHub `/v1/models`.
 - **Chat LLM support** through AxonHub `/v1/chat/completions`.
 - **Text embedding support** through AxonHub `/v1/embeddings` with `encoding_format=float`.
 - **Rerank support** through AxonHub `/v1/rerank`.
-- **Predefined model YAML files** so known AxonHub models appear directly in Dify.
-- **Custom model fallback** for private, tenant-specific, or newly added AxonHub models.
+- **Model name aliasing** with `AxonHub endpoint model name` for private or tenant-specific AxonHub model IDs.
 - **Optional tracing headers** with `AH-Trace-Id` and `AH-Thread-Id` for AxonHub-side observability.
 - **Safe error handling** that avoids exposing API keys in raised exceptions.
 
@@ -83,7 +82,9 @@ Configure these provider credentials in Dify:
 | `Enable tracing headers` | No | Adds `AH-Trace-Id` and `AH-Thread-Id` to model requests. |
 | `Request timeout seconds` | No | Timeout for AxonHub API requests. |
 
-For models that are not included in the predefined YAML files, add a custom model in Dify and set the model type to `llm`, `text-embedding`, or `rerank`. Use `AxonHub endpoint model name` when the Dify display name should differ from the actual AxonHub model identifier.
+After configuring provider credentials, add custom models in Dify with type `llm`, `text-embedding`, or `rerank`. Enter the AxonHub model identifier as the Dify model name; the plugin calls AxonHub `/v1/models?include=all` and fills the single model schema from discovery metadata. If the Dify model name should be a friendly alias, set `AxonHub endpoint model name` to the actual AxonHub model identifier.
+
+The current Dify plugin SDK does not expose a credential-aware hook for listing all models dynamically in the provider UI. For that reason this plugin no longer ships maintainer-specific predefined YAML models; model discovery happens when a custom model name is entered.
 
 ## Documentation
 
@@ -100,8 +101,8 @@ For models that are not included in the predefined YAML files, add a custom mode
 manifest.yaml                 # Dify plugin metadata
 provider/axonhub.yaml          # Provider schema and model registration
 provider/axonhub.py            # Provider credential validation
-models/llm/                    # LLM model implementation and predefined models
-models/text_embedding/         # Embedding model implementation and predefined models
+models/llm/                    # LLM model implementation
+models/text_embedding/         # Embedding model implementation
 models/rerank/                 # Rerank model implementation
 axonhub/                       # Shared AxonHub client, mapping, errors, tracing
 docs/                          # User and contributor documentation

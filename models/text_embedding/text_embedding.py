@@ -21,6 +21,7 @@ from axonhub.dify_compat import (
     redacted_error_message,
     to_oai_credentials,
 )
+from axonhub.model_schema import get_customizable_model_schema_from_axonhub
 from axonhub.tracing import build_tracing_headers
 
 
@@ -92,9 +93,10 @@ class AxonHubTextEmbeddingModel(oai_embedding.OAICompatEmbeddingModel):
         )
 
     def get_customizable_model_schema(self, model: str, credentials: dict):
-        return super().get_customizable_model_schema(
+        return get_customizable_model_schema_from_axonhub(
             model,
-            to_oai_credentials(model, credentials),
+            credentials,
+            expected_model_type=ModelType.TEXT_EMBEDDING,
         )
 
     def _post_embeddings(

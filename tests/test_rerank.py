@@ -3,6 +3,7 @@ from __future__ import annotations
 import requests
 
 import models.rerank.rerank as rerank_module
+from dify_plugin.entities.model import FetchFrom, ModelType
 from dify_plugin.entities.model.rerank import RerankResult
 from dify_plugin.errors.model import InvokeAuthorizationError, InvokeConnectionError
 from models.rerank.rerank import AxonHubRerankModel
@@ -30,6 +31,12 @@ class FakeRequests:
         if isinstance(self.response, Exception):
             raise self.response
         return self.response
+
+
+class FakeClient:
+    def list_models(self, include="all"):
+        assert include == "all"
+        return {"data": [{"id": "real-rerank", "name": "Real Rerank", "type": "reranker"}]}
 
 
 def rerank_model() -> AxonHubRerankModel:
@@ -92,7 +99,20 @@ def test_rerank_posts_jina_compatible_payload(monkeypatch) -> None:
     assert fake_requests.calls[0]["headers"]["AH-Trace-Id"].startswith("dify-")
 
 
-def test_rerank_maps_auth_error_without_leaking_api_key(monkeypatch) -> None:
+def test_rerank_customizable_schema_is_loaded_from_axonhub(monkeypatch) -> None:
+    monkeypatch.setattr("axonhub.model_schema.build_client", lambda _credentials: FakeClient())
+
+    schema = rerank_model().get_customizable_model_schema(
+        "dify-rerank",
+        {"endpoint_model_name": "real-rerank"},
+    )
+
+    assert schema.model == "dify-rerank"
+    assert schema.label.en_us == "Real Rerank"
+    assert schema.model_type == ModelType.RERANK
+    assert schema.fetch_from == FetchFrom.CUSTOMIZABLE_MODEL
+    assert schema.model_properties == {}
+
     api_key = "secret-key"
     fake_requests = FakeRequests(
         FakeResponse(401, {"error": {"message": f"bad {api_key}"}})
