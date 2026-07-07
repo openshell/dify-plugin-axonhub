@@ -82,7 +82,7 @@ python -m uv run pytest
 
 配置 provider 凭据后，请在 Dify 中添加自定义模型，并将模型类型设置为 `llm`、`text-embedding` 或 `rerank`。如果 Dify 模型名就是 AxonHub 真实模型 ID，直接填写该名称即可；插件会调用 AxonHub `/v1/models?include=all` 并根据发现元数据自动补全单个模型的 schema。如果希望 Dify 中使用友好名称或别名，请在 `AxonHub endpoint model name` 中填写真实 AxonHub 模型 ID。
 
-当前 Dify plugin SDK 没有提供“基于 provider 凭证动态列出完整模型列表”的标准入口。因此本插件不再内置维护者私有的预定义 YAML 模型；模型发现发生在用户输入自定义模型名之后。
+当前 Dify plugin SDK 没有提供“基于 provider 凭证动态列出完整模型列表”的标准入口。因此本插件只内置通用 AxonHub 占位预定义模型，用于兼容 Dify 安装流程和 provider 凭据入口；真实部署中的模型应通过自定义模型添加，模型发现发生在用户输入自定义模型名之后。
 
 ## 文档
 

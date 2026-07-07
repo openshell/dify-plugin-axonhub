@@ -1,0 +1,6 @@
+model: axonhub-custom-rerank
+label:
+  en_US: AxonHub Custom Rerank
+  zh_Hans: AxonHub 自定义 Rerank
+model_type: rerank
+model_properties: {}

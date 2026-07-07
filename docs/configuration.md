@@ -55,7 +55,7 @@ Example mappings:
 | `my-chat-model` | empty | `my-chat-model` |
 | `company-gpt` | `tenant-a/gpt-prod` | `tenant-a/gpt-prod` |
 
-The current Dify plugin SDK does not provide a provider-credential-aware hook for listing all models dynamically in the provider UI. Therefore this plugin does not ship maintainer-specific predefined YAML models. Model discovery happens after a user enters a custom model name.
+The current Dify plugin SDK does not provide a provider-credential-aware hook for listing all models dynamically in the provider UI. Therefore this plugin ships only generic AxonHub placeholder predefined models to keep Dify's provider credential entry and model-provider installation flow compatible. Real deployment-specific models should be added as custom models; model discovery happens after a user enters a custom model name.
 
 ## Tracing headers
 

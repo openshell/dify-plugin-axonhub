@@ -84,7 +84,7 @@ Configure these provider credentials in Dify:
 
 After configuring provider credentials, add custom models in Dify with type `llm`, `text-embedding`, or `rerank`. Enter the AxonHub model identifier as the Dify model name; the plugin calls AxonHub `/v1/models?include=all` and fills the single model schema from discovery metadata. If the Dify model name should be a friendly alias, set `AxonHub endpoint model name` to the actual AxonHub model identifier.
 
-The current Dify plugin SDK does not expose a credential-aware hook for listing all models dynamically in the provider UI. For that reason this plugin no longer ships maintainer-specific predefined YAML models; model discovery happens when a custom model name is entered.
+The current Dify plugin SDK does not expose a credential-aware hook for listing all models dynamically in the provider UI. For that reason this plugin ships only generic AxonHub placeholder predefined models for installation and provider credential compatibility; real deployment-specific models should be added as custom models, where discovery happens after a custom model name is entered.
 
 ## Documentation
 

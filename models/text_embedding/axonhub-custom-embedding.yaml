@@ -1,0 +1,8 @@
+model: axonhub-custom-embedding
+label:
+  en_US: AxonHub Custom Embedding
+  zh_Hans: AxonHub 自定义 Embedding
+model_type: text-embedding
+model_properties:
+  context_size: 512
+  max_chunks: 1

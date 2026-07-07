@@ -1,0 +1,25 @@
+model: axonhub-custom-llm
+label:
+  en_US: AxonHub Custom LLM
+  zh_Hans: AxonHub 自定义 LLM
+model_type: llm
+features:
+  - stream-tool-call
+  - multi-tool-call
+model_properties:
+  mode: chat
+  context_size: 4096
+parameter_rules:
+  - name: temperature
+    use_template: temperature
+  - name: top_p
+    use_template: top_p
+  - name: presence_penalty
+    use_template: presence_penalty
+  - name: frequency_penalty
+    use_template: frequency_penalty
+  - name: max_tokens
+    use_template: max_tokens
+    default: 1024
+    min: 1
+    max: 4096
