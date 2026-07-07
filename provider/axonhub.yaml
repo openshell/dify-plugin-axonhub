@@ -15,6 +15,7 @@ supported_model_types:
   - text-embedding
   - rerank
 configurate_methods:
+  - predefined-model
   - customizable-model
 provider_credential_schema:
   credential_form_schemas:

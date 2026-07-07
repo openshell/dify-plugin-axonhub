@@ -10,10 +10,14 @@ from dify_plugin.entities.model.provider import (
 def test_provider_schema_uses_customizable_models_only() -> None:
     provider = ModelProviderConfiguration(**load_yaml_file("provider/axonhub.yaml"))
 
-    assert provider.configurate_methods == [ConfigurateMethod.CUSTOMIZABLE_MODEL]
+    assert provider.configurate_methods == [
+        ConfigurateMethod.PREDEFINED_MODEL,
+        ConfigurateMethod.CUSTOMIZABLE_MODEL,
+    ]
     assert provider.models == []
     assert provider.position is not None
     assert provider.position.llm == []
     assert provider.position.text_embedding == []
     assert provider.position.rerank == []
+    assert provider.provider_credential_schema is not None
     assert provider.model_credential_schema is not None
